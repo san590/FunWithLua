@@ -25,7 +25,7 @@ function Number.getValue(self)
   return self.value
 end
 
-function Number.printValue(self)
+function Number.writeValue(self)
   io.write(self.value)
 end
 
@@ -56,10 +56,6 @@ end
 function getInput()
   io.write("Podaj liczbę: ")
   liczba = io.read()
-  os.execute("clear")
-  print("CodeCracker")
-  io.write("Podano liczbę: " .. liczba)
-  newLine()
   return tonumber(liczba)
 end
 
@@ -68,29 +64,35 @@ function showLives(lives)
   tried = 'x'
   
   newLine()
-  io.write("Lives: ")
-
-  for i=1, lives do
-    io.write(try)
-  end
+  io.write("Życia: ")
 
   for i=1, 3-lives do
     io.write(tried)
   end
-
+  
+  for i=1, lives do
+    io.write(try)
+  end
 end
 
+firstNumber = Number.new()
+secondNumber = Number.new()
+thirdNumber = Number.new()
+fourthNumber = Number.new()
+
+function showCode()
+  firstNumber:writeValue()
+  secondNumber:writeValue()
+  thirdNumber:writeValue()
+  fourthNumber: writeValue()
+end
 
 function game()
-  local firstNumber = Number.new()
-  local secondNumber = Number.new()
-  local thirdNumber = Number.new()
-  local fourthNumber = Number.new()
-
   lives = 3
 
+  print("CodeCracker")
+
   while true do
-    print("CodeCracker")
     liczba = getInput()
     isEqual = 0
 
@@ -106,10 +108,14 @@ function game()
     showLives(lives)
 
     if(lives == 0) then
+      newLine()
+      io.write("Kod, którego nie zgadłeś wynosi: ")
+      showCode()
       break
     end
 
-   
+    newLine()
+    newLine()
     
   end
 
