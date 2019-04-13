@@ -9,7 +9,8 @@ function getInput()
     if(tonumber(height) < 3) then
       os.execute("clear")
     else
-      break end
+      break 
+    end
   end
 end
 
@@ -53,7 +54,8 @@ function drawTrunk()
       for j=1, width do
         if(j == halfWidth + 1) then
           printSign()
-        else printSpace() end
+        else printSpace() 
+        end
 
         if(j == width) then
           newLine()
