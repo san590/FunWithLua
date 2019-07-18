@@ -54,11 +54,12 @@ function Number.show(self)
 end
 
 function getInput()
-  io.write("Podaj liczbÄ™: ")
+  print("CodeCracker")
+  io.write("Podaj liczbê: ")
   liczba = io.read()
   os.execute("clear")
   print("CodeCracker")
-  io.write("Podano liczbÄ™: " .. liczba)
+  io.write("Podano liczbê: " .. liczba)
   newLine()
   return tonumber(liczba)
 end
@@ -68,51 +69,103 @@ function showLives(lives)
   tried = 'x'
   
   newLine()
-  io.write("Lives: ")
+  if(lives > 0) then
+    io.write("Pozosta³a iloœæ ¿yæ: ")
 
-  for i=1, lives do
-    io.write(try)
+    for i=1, lives do
+      io.write(try)
+    end
+
+    for i=1, 3-lives do
+      io.write(tried)
+    end
   end
-
-  for i=1, 3-lives do
-    io.write(tried)
-  end
-
 end
 
+function core(liczba)
+  isEqual = 0
 
+  isEqual = isEqual + firstNumber:isEqual(liczba)
+  isEqual = isEqual + secondNumber:isEqual(liczba)
+  isEqual = isEqual + thirdNumber:isEqual(liczba)
+  isEqual = isEqual + fourthNumber:isEqual(liczba)
+
+  if(isEqual == 0 and lives > 0) then
+    lives = lives - 1
+  end
+end
+
+function generateCode()
+  firstNumber = Number:new()
+  secondNumber = Number:new()
+  thirdNumber = Number:new()
+  fourthNumber = Number:new()
+end
+
+function showCode()
+  firstNumber:show()
+  secondNumber:show()
+  thirdNumber:show()
+  fourthNumber:show()
+end
+
+function showAnswer()
+  firstNumber:replace()
+  secondNumber:replace()
+  thirdNumber:replace()
+  fourthNumber:replace()
+
+  io.write("Kod, który nie zosta³ zgadniêty to:")
+  firstNumber:show()
+  secondNumber:show()
+  thirdNumber:show()
+  fourthNumber:show()
+end
+
+function showGame()
+  getInput()
+end
+ numTab = {}
 function game()
-  local firstNumber = Number.new()
-  local secondNumber = Number.new()
-  local thirdNumber = Number.new()
-  local fourthNumber = Number.new()
-
+  generateCode()
   lives = 3
 
+ 
+  tabIndex = 1
+  isInTab = 0
+
   while true do
-    print("CodeCracker")
+   
     liczba = getInput()
-    isEqual = 0
+    isInTab = 0
 
-    isEqual = isEqual + firstNumber:isEqual(liczba)
-    isEqual = isEqual + secondNumber:isEqual(liczba)
-    isEqual = isEqual + thirdNumber:isEqual(liczba)
-    isEqual = isEqual + fourthNumber:isEqual(liczba)
-
-    if(isEqual == 0) then
-      lives = lives - 1
+    for i=1, tabIndex do
+      if(liczba == numTab[i]) then
+        isInTab = 1
+        break
+      elseif (i == tabIndex) then
+        numTab[tabIndex] = liczba
+        tabIndex = tabIndex + 1
+      end
     end
-
+    
+    if(isInTab == 0) then
+      core(liczba)
+    end
     showLives(lives)
+    newLine()
+    io.write("Wykorzystane liczby to: ")
+    for i=1, tabIndex-1 do
+      io.write(tostring(numTab[i]))
+      space()
+    end
 
     if(lives == 0) then
+      os.execute("clear")
+      showAnswer()
       break
     end
-
-   
-    
   end
-
 end
 
 game()
