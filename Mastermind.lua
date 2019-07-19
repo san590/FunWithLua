@@ -1,14 +1,14 @@
 math.randomseed(os.time())
 local Pin = {}
 Pin.__index = Pin
+local MyPin = {}
+MyPin.__index = MyPin
 charTab = {}
 charTabSize = 0
 codeTab = {}
 codeSize = 0
-upperCharTab = {}
-upperCharTabSize = 0
-givenTab = {}
-givenSize = 0
+myCodeTab = {}
+myCodeSize = 0
 
 function space()
   io.write(" ")
@@ -24,17 +24,10 @@ function setCharTab()
   charTab[3] = 'b' --Blue
   charTab[4] = 'r' --Red
   charTab[5] = 'p' --Pink
-  charTab[6] = 'b' --Black
+  charTab[6] = 'l' --bLack
   charTab[7] = 'g' --Green
   charTab[8] = 'o' --Orange
   charTabSize = #charTab
-  upperCharTabSize = charTabSize
-end
-
-function setUpperCharTab()
-  for i=1, upperCharTabSize do
-    upperCharTab[i] = string.upper(charTab[i])
-  end
 end
 
 function getRandomValue()
@@ -58,27 +51,27 @@ function Pin.writeValue(self)
   io.write(self.value)
 end
 
-function generateCode()
-  firstPin = Pin:new()
-  secondPin = Pin:new()
-  thirdPin = Pin:new()
-  fourthPin = Pin:new()
+function MyPin.new()
+  local self = setmetatable({}, MyPin)
+  self.value = '-'
+  return self
 end
 
-function showCode()
-  firstPin:writeValue()
-  secondPin:writeValue()
-  thirdPin:writeValue()
-  fourthPin:writeValue()
+function MyPin.setValue(self, value)
+  self.value = value
 end
 
-function createCode(var)
+function MyPin.writeValue(self)
+  io.write(self.value)
 end
-  
 
-function check(var)
-  for i=1, 8 do
-    if(var == codeTab[i]) then
+function MyPin.getValue(self)
+  return self.value
+end
+
+function checkInput(var)
+  for i=1, charTabSize do
+    if(var == charTab[i] or var == string.upper(charTab[i])) then
       return 1
     end
     
@@ -88,16 +81,127 @@ function check(var)
   end
 end
 
+function showMyCode()
+  firstMyPin:writeValue()
+  secondMyPin:writeValue()
+  thirdMyPin:writeValue()
+  fourthMyPin:writeValue()
+end
+
+function MyPin.getInput(self)
+  while true do
+    io.write("Kolory: White, Yellow, Blue, Red, Pink, bLack, Orange. Wyró¿niona litera s³u¿y do wprowadzenia koloru.")
+    newLine()
+    io.write("Kolor: ")
+    kolor = io.read()
+    var = checkInput(kolor)
+    if(var == 1) then
+      break
+    end
+    os.execute("clear")
+  end
+  iter = iter + 1
+
+  MyPin.setValue(self, kolor)
+
+  io.write("Wprowadzony kod: ")
+  showMyCode()
+  io.read()
+  if iter < 5 then 
+    os.execute("clear")
+  elseif iter == 4 then
+    iter = 0
+  end
+end
+
+function createCode()
+  firstPin = Pin:new()
+  secondPin = Pin:new()
+  thirdPin = Pin:new()
+  fourthPin = Pin:new()
+end
+
+function createAnswer()
+  firstMyPin = MyPin:new()
+  secondMyPin = MyPin:new()
+  thirdMyPin = MyPin:new()
+  fourthMyPin = MyPin:new()
+end
+
+function generateAnswer()
+  firstMyPin:getInput()
+  secondMyPin:getInput()
+  thirdMyPin:getInput()
+  fourthMyPin:getInput()
+end
+
+function showCode()
+  firstPin:writeValue()
+  secondPin:writeValue()
+  thirdPin:writeValue()
+  fourthPin:writeValue()
+end
+
+
+function showAnswer()
+  firstMyPin:writeValue()
+  secondMyPin:writeValue()
+  thirdMyPin:writeValue()
+  fourthMyPin:writeValue()
+end
+
+function myCodeRefresh()
+  firstMyPin:setValue("-")
+  secondMyPin:setValue("-")
+  thirdMyPin:setValue("-")
+  fourthMyPin:setValue("-")
+end
+
+function checkCode()
+  for 1, codeSize do
+    if()
+end
+
+
 function prepareGame()
   setCharTab()
-  setUpperCharTab()
-  generateCode()
+  createCode()
+  createAnswer()
 end
 
 function game()
-  gcwp = 0 --good colour, wrong place
-  gcgp = 0 --good colour, good place
+  
   prepareGame()
+
+  for i=1, 30 do
+    if myCodeSize > 4 then
+      myCodeSize = 1
+    end
+    gcwp = 0 --good colour, wrong place
+    gcgp = 0 --good colour, good place
+    iter = 0
+    generateAnswer()
+    checkCode()
+
+    io.write("Dobry kolor, z³e miejsce: " .. gcwp)
+    newLine()
+    io.write("Dobry kolor, dobre miejsce: " .. gcgp)
+    newLine()
+    io.write("Twój kod: ")
+    showAnswer()
+    newLine()
+    io.write("Szukany kod: ")
+    showCode()
+    io.read()
+    os.execute("clear")
+    io.write("Pozosta³o " .. 30 - i .. " prób")
+    myCodeRefresh()
+    newLine()
+    io.read()
+
+    os.execute("clear")
+    
+  end
   
 end
 
