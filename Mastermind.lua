@@ -2,6 +2,8 @@ math.randomseed(os.time())
 local Pin = {}
 Pin.__index = Pin
 charTab = {}
+codeTab = {}
+codeSize = 0
 
 function space()
   io.write(" ")
@@ -30,6 +32,8 @@ end
 function Pin.new()
   local self = setmetatable({}, Pin)
   self.value = getRandomValue()
+  codeSize = codeSize + 1
+  codeTab[codeSize] = self.value
   return self
 end
 
@@ -55,13 +59,27 @@ function showCode()
   fourthPin:writeValue()
 end
 
+function check(var)
+  for i=1, 8 do
+    if(var == codeTab[i]) then
+      return 1
+    end
+    
+    if(i == 8) then
+      return 0
+    end
+  end
+end
+
 function game()
   setTable()
   generateCode()
   showCode()
+  newLine()
+
+  var = io.read()
+  dd = check(var)
+  io.write(dd)
 end
 
 game()
-
-
-     
