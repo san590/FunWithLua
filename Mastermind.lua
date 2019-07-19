@@ -1,15 +1,19 @@
 math.randomseed(os.time())
 local Pin = {}
 Pin.__index = Pin
+
 local MyPin = {}
 MyPin.__index = MyPin
+
 charTab = {}
 charTabSize = 0
 codeTab = {}
 codeSize = 0
+
 myCodeTab = {}
 myCodeSize = 0
 countTab = {0, 0, 0, 0, 0, 0, 0, 0}
+
 function space()
   io.write(" ")
 end
@@ -51,6 +55,7 @@ function Pin.writeValue(self)
   io.write(self.value)
 end
 
+
 function MyPin.new()
   local self = setmetatable({}, MyPin)
   self.value = '-'
@@ -90,7 +95,7 @@ end
 
 function MyPin.getInput(self)
   while true do
-    io.write("Kolory: White, Yellow, Blue, Red, Pink, bLack, Green, Orange. Wyró¿niona litera s³u¿y do wprowadzenia koloru.")
+    io.write("Kolory: White, Yellow, Blue, Red, Pink, bLack, Green, Orange. Wyrï¿½niona litera sï¿½uï¿½y do wprowadzenia koloru.")
     newLine()
     io.write("Kolor: ")
     kolor = io.read()
@@ -127,11 +132,13 @@ function count(var)
   end
 end
 
-function createCode()
+function generateCode()
+
   firstPin = Pin:new()
   secondPin = Pin:new()
   thirdPin = Pin:new()
   fourthPin = Pin:new()
+
 
   count('w')
   count('y')
@@ -156,6 +163,7 @@ function generateAnswer()
   secondMyPin:getInput()
   thirdMyPin:getInput()
   fourthMyPin:getInput()
+
 end
 
 function showCode()
@@ -213,18 +221,18 @@ function game()
     generateAnswer()
     checkCode()
 
-    io.write("Dobry kolor, z³e miejsce: " .. gcwp)
+    io.write("Dobry kolor, zï¿½e miejsce: " .. gcwp)
     newLine()
     io.write("Dobry kolor, dobre miejsce: " .. gcgp)
     newLine()
-    io.write("Twój kod: ")
+    io.write("Twï¿½j kod: ")
     showAnswer()
     newLine()
     io.write("Szukany kod: ")
     showCode()
     io.read()
     os.execute("clear")
-    io.write("Pozosta³o " .. 30 - i .. " prób")
+    io.write("Pozostaï¿½o " .. 30 - i .. " prï¿½b")
     myCodeRefresh()
     newLine()
     io.read()
@@ -236,3 +244,4 @@ function game()
 end
 
 game()
+

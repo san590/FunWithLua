@@ -19,12 +19,14 @@ function Number.new()
   self.value = getRandomValue()
   self.shownValue = "_"
   self.shown = 0
+
   return self
 end
 
 function Number.getValue(self)
   return self.value
 end
+
 
 function Number.isShown(self)
   return self.shown
@@ -63,10 +65,10 @@ function getInput(var)
   if(var > 0) then
     newLine()
   end
-  io.write("Podaj liczbê: ")
+  io.write("Podaj liczbï¿½: ")
   liczba = io.read()
   os.execute("clear")
-  io.write("Podano liczbê: " .. liczba)
+  io.write("Podano liczbï¿½: " .. liczba)
   newLine()
   return tonumber(liczba)
 end
@@ -76,8 +78,9 @@ function showLives(lives)
   tried = 'x'
   
   newLine()
+
   if(lives > 0) then
-    io.write("Pozosta³a iloœæ ¿yæ: ")
+    io.write("Pozostaï¿½a iloï¿½ï¿½ ï¿½yï¿½: ")
 
     for i=1, lives do
       io.write(try)
@@ -131,7 +134,7 @@ function showAnswer()
   thirdNumber:replace()
   fourthNumber:replace()
   newLine()
-  io.write("Kod, którego nie zgad³eœ to: ")
+  io.write("Kod, ktï¿½rego nie zgadï¿½eï¿½ to: ")
   firstNumber:show()
   secondNumber:show()
   thirdNumber:show()
@@ -144,9 +147,9 @@ end
 
 function endGame()
   os.execute("clear")
-  io.write("Gratulacje! Wygra³eœ grê.")
+  io.write("Gratulacje! Wygraï¿½eï¿½ grï¿½.")
   newLine()
-  io.write("Oto szczêœliwy kod: ")
+  io.write("Oto szczï¿½liwy kod: ")
   showCode()
 end
 
