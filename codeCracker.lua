@@ -18,11 +18,16 @@ function Number.new()
   local self = setmetatable({}, Number)
   self.value = getRandomValue()
   self.shownValue = "_"
+  self.shown = 0
   return self
 end
 
 function Number.getValue(self)
   return self.value
+end
+
+function Number.isShown(self)
+  return self.shown
 end
 
 function Number.printValue(self)
@@ -31,6 +36,7 @@ end
 
 function Number.replace(self)
   self.shownValue = self.shownValue:gsub("_", tostring(self.value))
+  self.shown = 1
 end
 
 function Number.isEqual(self, givenValue)
@@ -53,12 +59,13 @@ function Number.show(self)
   end
 end
 
-function getInput()
-  print("CodeCracker")
+function getInput(var)
+  if(var > 0) then
+    newLine()
+  end
   io.write("Podaj liczbê: ")
   liczba = io.read()
   os.execute("clear")
-  print("CodeCracker")
   io.write("Podano liczbê: " .. liczba)
   newLine()
   return tonumber(liczba)
@@ -109,13 +116,22 @@ function showCode()
   fourthNumber:show()
 end
 
+function isWin()
+  sum = 0
+  sum = sum + firstNumber:isShown()
+  sum = sum + secondNumber:isShown()
+  sum = sum + thirdNumber:isShown()
+  sum = sum + fourthNumber:isShown()
+  return sum
+end
+
 function showAnswer()
   firstNumber:replace()
   secondNumber:replace()
   thirdNumber:replace()
   fourthNumber:replace()
-
-  io.write("Kod, który nie zosta³ zgadniêty to:")
+  newLine()
+  io.write("Kod, którego nie zgad³eœ to: ")
   firstNumber:show()
   secondNumber:show()
   thirdNumber:show()
@@ -125,18 +141,25 @@ end
 function showGame()
   getInput()
 end
- numTab = {}
+
+function endGame()
+  os.execute("clear")
+  io.write("Gratulacje! Wygra³eœ grê.")
+  newLine()
+  io.write("Oto szczêœliwy kod: ")
+  showCode()
+end
+
 function game()
   generateCode()
   lives = 3
-
- 
+  numTab = {}
+  isWon = 0
   tabIndex = 1
-  isInTab = 0
+  variab = 0
 
   while true do
-   
-    liczba = getInput()
+    liczba = getInput(variab)
     isInTab = 0
 
     for i=1, tabIndex do
@@ -160,11 +183,18 @@ function game()
       space()
     end
 
+    isWon = isWin()
+
+    if(isWon == 4) then
+      endGame()
+      break
+    end
+
     if(lives == 0) then
-      os.execute("clear")
       showAnswer()
       break
     end
+    variab = variab + 1
   end
 end
 
