@@ -2,6 +2,13 @@ math.randomseed(os.time())
 local Pin = {}
 Pin.__index = Pin
 charTab = {}
+charTabSize = 0
+codeTab = {}
+codeSize = 0
+upperCharTab = {}
+upperCharTabSize = 0
+givenTab = {}
+givenSize = 0
 
 function space()
   io.write(" ")
@@ -11,7 +18,7 @@ function newLine()
   print()
 end
 
-function setTable()
+function setCharTab()
   charTab[1] = 'w' --White
   charTab[2] = 'y' --Yellow
   charTab[3] = 'b' --Blue
@@ -20,6 +27,14 @@ function setTable()
   charTab[6] = 'b' --Black
   charTab[7] = 'g' --Green
   charTab[8] = 'o' --Orange
+  charTabSize = #charTab
+  upperCharTabSize = charTabSize
+end
+
+function setUpperCharTab()
+  for i=1, upperCharTabSize do
+    upperCharTab[i] = string.upper(charTab[i])
+  end
 end
 
 function getRandomValue()
@@ -30,6 +45,8 @@ end
 function Pin.new()
   local self = setmetatable({}, Pin)
   self.value = getRandomValue()
+  codeSize = codeSize + 1
+  codeTab[codeSize] = self.value
   return self
 end
 
@@ -55,13 +72,33 @@ function showCode()
   fourthPin:writeValue()
 end
 
-function game()
-  setTable()
+function createCode(var)
+end
+  
+
+function check(var)
+  for i=1, 8 do
+    if(var == codeTab[i]) then
+      return 1
+    end
+    
+    if(i == 8) then
+      return 0
+    end
+  end
+end
+
+function prepareGame()
+  setCharTab()
+  setUpperCharTab()
   generateCode()
-  showCode()
+end
+
+function game()
+  gcwp = 0 --good colour, wrong place
+  gcgp = 0 --good colour, good place
+  prepareGame()
+  
 end
 
 game()
-
-
-     
